@@ -5,6 +5,9 @@ class ArmNoneEabiBinutils < Formula
   homepage 'http://www.gnu.org/software/binutils/binutils.html'
   sha1 '587fca86f6c85949576f4536a90a3c76ffc1a3e1'
 
+  option 'skip-tests', 'Don\'t run the testsuite'
+
+
   def install
     target = "arm-none-eabi"
 
@@ -22,6 +25,7 @@ class ArmNoneEabiBinutils < Formula
         system "../configure", *args
 
         system "make"
+        system "make check" unless build.include? 'skip_tests'
         system "make install"
     end
   end
