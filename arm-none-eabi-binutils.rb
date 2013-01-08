@@ -23,5 +23,6 @@ class ArmNoneEabiBinutils < Formula
 
         system "make"
         system "make install"
+    end
   end
 end
