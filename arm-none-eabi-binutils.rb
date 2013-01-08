@@ -13,8 +13,6 @@ class ArmNoneEabiBinutils < Formula
 
     args = ["--target=#{target}",
             "--prefix=#{prefix}",
-            "--infodir=#{info}",
-            "--mandir=#{man}",
             "--enable-multilib",
             "--with-gnu-as",
             "--with-gnu-ld",
