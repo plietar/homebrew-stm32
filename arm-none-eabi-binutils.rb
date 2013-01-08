@@ -1,4 +1,5 @@
 require 'formula'
+
 class ArmNoneEabiBinutils < Formula
   url 'http://ftpmirror.gnu.org/binutils/binutils-2.23.1.tar.bz2'
   mirror 'http://ftp.gnu.org/gun/binutils/binutils-2.23.1.tar.bz2'
@@ -25,6 +26,11 @@ class ArmNoneEabiBinutils < Formula
         system "make"
         system "make check" unless build.include? 'skip_tests'
         system "make install"
+
+
+        # Do not install libiberty.a, as it may conflict with host file
+        multios = `gcc --print-multi-os-dir`.chomp
+        File.unlink "#{lib}/#{multios}/libiberty.a"
     end
   end
 end
