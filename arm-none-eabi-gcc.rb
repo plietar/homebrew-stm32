@@ -79,7 +79,7 @@ class ArmNoneEabiGcc < Formula
       system "make install"
 
       # Do not install libiberty.a, as it may conflict with host file
-      multios = `gcc --print-multi-os-dir`.chomp
+      multios = `gcc --print-multi-os-directory`.chomp
       File.unlink "#{lib}/#{multios}/libiberty.a"
     end
   end
