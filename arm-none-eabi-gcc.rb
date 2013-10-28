@@ -17,7 +17,7 @@ class ArmNoneEabiGcc < Formula
   depends_on 'gmp'
   depends_on 'mpfr'
   depends_on 'libmpc'
-  depends_on 'ppl'
+  depends_on 'ppl10'
   depends_on 'cloog'
 
   depends_on 'arm-none-eabi-binutils'
@@ -56,7 +56,7 @@ class ArmNoneEabiGcc < Formula
 
     args << "--enable-languages=#{languages.join(',')}"
 
-    ['gmp', 'mpfr', 'ppl', 'cloog'].each do |dep|
+    ['gmp', 'mpfr', 'ppl10', 'cloog'].each do |dep|
       args << "--with-#{dep}=#{(Formula.factory dep).prefix}"
     end
 
@@ -79,7 +79,7 @@ class ArmNoneEabiGcc < Formula
       system "make install"
 
       # Do not install libiberty.a, as it may conflict with host file
-      multios = `gcc --print-multi-os-dir`.chomp
+      multios = `gcc --print-multi-os-directory`.chomp
       File.unlink "#{lib}/#{multios}/libiberty.a"
     end
   end
