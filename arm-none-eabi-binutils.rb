@@ -1,36 +1,29 @@
 require 'formula'
 
 class ArmNoneEabiBinutils < Formula
-  url 'http://ftpmirror.gnu.org/binutils/binutils-2.23.1.tar.bz2'
-  mirror 'http://ftp.gnu.org/gun/binutils/binutils-2.23.1.tar.bz2'
   homepage 'http://www.gnu.org/software/binutils/binutils.html'
-  sha1 '587fca86f6c85949576f4536a90a3c76ffc1a3e1'
-
-  option 'skip-tests', 'Don\'t run the testsuite'
-
+  url 'http://ftpmirror.gnu.org/binutils/binutils-2.24.tar.gz'
+  mirror 'http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.gz'
+  sha1 '1b2bc33003f4997d38fadaa276c1f0321329ec56'
 
   def install
-    target = "arm-none-eabi"
-
-    args = ["--target=#{target}",
+    args = ["--disable-debug",
+            "--disable-dependency-tracking",
+            "--target=arm-none-eabi",
             "--prefix=#{prefix}",
-            "--enable-multilib",
-            "--with-gnu-as",
-            "--with-gnu-ld",
+            "--infodir=#{info}",
+            "--mandir=#{man}",
             "--disable-werror",
-            "--disable-nls"]
+            "--disable-nls",
+            "--enable-multilib"]
 
     mkdir 'build' do
-        system "../configure", *args
+      system "../configure", *args
 
-        system "make"
-        system "make check" unless build.include? 'skip_tests'
-        system "make install"
-
-
-        # Do not install libiberty.a, as it may conflict with host file
-        multios = `gcc --print-multi-os-directory`.chomp
-        File.unlink "#{lib}/#{multios}/libiberty.a"
+      system "make"
+      system "make install"
     end
+
+    info.rmtree # info files conflict with native binutils
   end
 end
