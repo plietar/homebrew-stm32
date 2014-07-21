@@ -80,6 +80,9 @@ class ArmNoneEabiGcc < Formula
     # info and man7 files conflict with native gcc
     info.rmtree
     man7.rmtree
+
+    # stdcxx's python helpers may conflict with native gcc
+    (share + "gcc-#{version}/python").rmtree
   end
 end
 
